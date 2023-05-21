@@ -20,7 +20,7 @@ def relatorio():
     print("Achou ouro: "+ str(venceu))
     print("Voltou para origem: "+ str(qtd_origem))
     print()
-    print("Voltou nos mundos: ",str(voltou_mundo))
+    #print("Voltou nos mundos: ",str(voltou_mundo))
     #print("Movimentos: "+ str(movimento_agente))
         
 
