@@ -97,7 +97,7 @@ Essa função contribui para a dinâmica do jogo, fornecendo pistas ao agente so
 
 ## **[ETAPA 2]()** *(Concluída)*
 
-**1.**A função adicionarPercepcoes(matrix) é responsável por adicionar as percepções de "fedor", "brisa" e "brilho" nas posições adjacentes às células que contêm o Wumpus, o poço e o ouro, respectivamente.
+**1.** A função adicionarPercepcoes(matrix) é responsável por adicionar as percepções de "fedor", "brisa" e "brilho" nas posições adjacentes às células que contêm o Wumpus, o poço e o ouro, respectivamente.
 
 Ela recebe como parâmetro uma matriz matrix, que representa o mundo do jogo, onde cada célula contém informações sobre os elementos presentes (agente, Wumpus, poço, ouro) e suas percepções.
 
@@ -109,7 +109,7 @@ Essa função é importante para que o agente possa receber informações sobre 
 
 Essa função contribui para a lógica do jogo e para o comportamento do agente, permitindo que ele faça escolhas mais informadas durante sua exploração do ambiente.
 
-**2.**A função identificaPercepcao(matrix, posicao) é responsável por identificar e retornar a percepção específica de uma determinada posição no ambiente do jogo.
+**2.** A função identificaPercepcao(matrix, posicao) é responsável por identificar e retornar a percepção específica de uma determinada posição no ambiente do jogo.
 
 Ela recebe dois parâmetros: a matriz matrix, que representa o mundo do jogo com suas células e informações, e a posicao, que indica a coordenada (linha, coluna) da célula da qual se deseja obter a percepção.
 
@@ -119,7 +119,7 @@ Essa função é importante para que o agente possa obter informações sobre as
 
 Em resumo, a função identificaPercepcao permite ao agente obter informações sobre as percepções do ambiente em uma posição específica, contribuindo para suas decisões e estratégias durante o jogo.
 
-**3.**A função atiraFlecha(posicao, matrix) é responsável por simular o ato de o agente atirar uma flecha em uma determinada direção no ambiente do jogo.
+**3.** A função atiraFlecha(posicao, matrix) é responsável por simular o ato de o agente atirar uma flecha em uma determinada direção no ambiente do jogo.
 
 Ela recebe dois parâmetros: posicao, que indica a posição atual do agente no jogo (coordenada linha e coluna), e matrix, que representa o ambiente do jogo com suas células e informações.
 
