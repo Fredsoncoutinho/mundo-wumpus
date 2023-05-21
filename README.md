@@ -1,4 +1,4 @@
-## O mundo-wumpus
+## O mundo de wumpus
 # Disciplina: Inteligência Computacional
 **Discente 1**: Fredson Coutinho de Araújo Junior-201933940014
 
@@ -29,7 +29,8 @@ O jogo "Mundo de Wumpus" é um desafio intelectual, pois exige raciocínio lógi
 Ao final de cada jogo, o jogador recebe um relatório com informações estatísticas, como o número de tentativas, mortes por Wumpus ou poços, e se o tesouro foi encontrado e recuperado com sucesso. Esses dados incentivam o jogador a melhorar sua estratégia e tentar novamente, criando uma experiência desafiadora e envolvente.
 
 Em resumo, o jogo "Mundo de Wumpus" proporciona aos jogadores uma aventura emocionante, onde eles precisam usar suas habilidades de raciocínio e estratégia para explorar um ambiente perigoso, encontrar o tesouro e sobreviver aos perigos que espreitam em cada canto. É uma experiência estimulante que testa a astúcia e a coragem dos jogadores, enquanto os transporta para um mundo repleto de mistérios e desafios emocionantes.
-## **[ETAPA 1](https://github.com/cotabr/Mundo-de-Wumpus/blob/main/Etapa%201/README.md)** *(Concluída)*
+
+## **[ETAPA 1]()** *(Concluída)*
 
 O código fornecido é uma implementação de um jogo baseado em uma matriz, onde um agente precisa navegar por um mundo em busca de um tesouro, evitando poços e um monstro chamado Wumpus.
  Abaixo descreve de forma detalhada o desenvolvimento para concluir a etapa 1:
@@ -89,3 +90,58 @@ Essas percepções adicionadas ao mundo do jogo são fundamentais para que o age
 
 Essa função contribui para a dinâmica do jogo, fornecendo pistas ao agente sobre o ambiente e auxiliando na sua tomada de decisões para evitar ameaças e alcançar o objetivo de encontrar o tesouro com segurança.
 
+## **[ETAPA 2]()** *(Concluída)*
+
+**1.**A função adicionarPercepcoes(matrix) é responsável por adicionar as percepções de "fedor", "brisa" e "brilho" nas posições adjacentes às células que contêm o Wumpus, o poço e o ouro, respectivamente.
+
+Ela recebe como parâmetro uma matriz matrix, que representa o mundo do jogo, onde cada célula contém informações sobre os elementos presentes (agente, Wumpus, poço, ouro) e suas percepções.
+
+A função percorre cada célula da matriz e verifica se contém o símbolo correspondente ao Wumpus, poço ou ouro. Caso encontre algum desses símbolos, ela adiciona a percepção correspondente (fedor, brisa ou brilho) nas posições adjacentes à célula.
+
+Por exemplo, se a função encontra o símbolo "W" em uma célula, ela adiciona a percepção de fedor nas posições acima, abaixo, à esquerda e à direita dessa célula, desde que essas posições não contenham o símbolo "W" ou "P".
+
+Essa função é importante para que o agente possa receber informações sobre as percepções do ambiente e tomar decisões com base nelas, como evitar movimentos que levem a células com fedor (indicando a presença do Wumpus) ou brisa (indicando a presença de um poço). Além disso, a percepção de brilho indica a presença do ouro, o objetivo principal do agente.
+
+Essa função contribui para a lógica do jogo e para o comportamento do agente, permitindo que ele faça escolhas mais informadas durante sua exploração do ambiente.
+
+**2.**A função identificaPercepcao(matrix, posicao) é responsável por identificar e retornar a percepção específica de uma determinada posição no ambiente do jogo.
+
+Ela recebe dois parâmetros: a matriz matrix, que representa o mundo do jogo com suas células e informações, e a posicao, que indica a coordenada (linha, coluna) da célula da qual se deseja obter a percepção.
+
+A função verifica o conteúdo da célula na posição especificada e identifica qual percepção está associada a esse conteúdo. Por exemplo, se a célula contém o símbolo "W", a função retorna a percepção de fedor, indicando a presença do Wumpus. Se a célula contém o símbolo "P", a função retorna a percepção de brisa, indicando a presença de um poço. E se a célula contém o símbolo "G", a função retorna a percepção de brilho, indicando a presença do ouro.
+
+Essa função é importante para que o agente possa obter informações sobre as percepções de uma célula específica no ambiente. Com base nessa percepção, o agente pode tomar decisões e planejar seus próximos movimentos de forma mais inteligente. Por exemplo, se a percepção for de fedor, o agente pode evitar essa célula para evitar o confronto com o Wumpus. Se a percepção for de brisa, o agente pode evitar a célula para evitar cair em um poço. E se a percepção for de brilho, o agente sabe que encontrou o ouro e pode planejar sua rota para pegá-lo.
+
+Em resumo, a função identificaPercepcao permite ao agente obter informações sobre as percepções do ambiente em uma posição específica, contribuindo para suas decisões e estratégias durante o jogo.
+
+**3.**A função atiraFlecha(posicao, matrix) é responsável por simular o ato de o agente atirar uma flecha em uma determinada direção no ambiente do jogo.
+
+Ela recebe dois parâmetros: posicao, que indica a posição atual do agente no jogo (coordenada linha e coluna), e matrix, que representa o ambiente do jogo com suas células e informações.
+
+A função utiliza a posição atual do agente para determinar a direção em que a flecha será disparada. Por exemplo, se o agente estiver na posição (linha, coluna), a flecha será disparada na direção correspondente à linha acima (linha-1) ou abaixo (linha+1) e à mesma coluna.
+
+Ao disparar a flecha, a função verifica se há algum Wumpus na direção em que a flecha foi disparada. Se houver um Wumpus na célula atingida pela flecha, o Wumpus é eliminado e a informação é atualizada na matriz matrix. Caso contrário, a flecha simplesmente passa pelo espaço vazio sem causar nenhum efeito.
+
+Essa função é importante para que o agente possa se livrar dos Wumpus no ambiente. Ao atirar a flecha, o agente elimina qualquer Wumpus na direção em que a flecha foi disparada, tornando essa área segura para ser explorada.
+
+Em resumo, a função atiraFlecha simula o ato de atirar uma flecha em uma determinada direção no ambiente do jogo, permitindo que o agente elimine Wumpus e torne o ambiente mais seguro para exploA função atiraFlecha(posicao, matrix) é responsável por simular o ato de o agente atirar uma flecha em uma determinada direção no ambiente do jogo.
+
+Ela recebe dois parâmetros: posicao, que indica a posição atual do agente no jogo A função atiraFlecha(posicao, matrix) é responsável por simular o ato de o agente atirar uma flecha em uma determinada direção no ambiente do jogo.
+
+Ela recebe dois parâmetros: posicao, que indica a posição atual do agente no jogo (coordenada linha e coluna), e matrix, que representa o ambiente do jogo com suas células e informações.
+
+A função utiliza a posição atual do agente para determinar a direção em que a flecha será disparada. Por exemplo, se o agente estiver na posição (linha, coluna), a flecha será disparada na direção correspondente à linha acima (linha-1) ou abaixo (linha+1) e à mesma coluna.
+
+Ao disparar a flecha, a função verifica se há algum Wumpus na direção em que a flecha foi disparada. Se houver um Wumpus na célula atingida pela flecha, o Wumpus é eliminado e a informação é atualizada na matriz matrix. Caso contrário, a flecha simplesmente passa pelo espaço vazio sem causar nenhum efeito.
+
+Essa função é importante para que o agente possa se livrar dos Wumpus no ambiente. Ao atirar a flecha, o agente elimina qualquer Wumpus na direção em que a flecha foi disparada, tornando essa área segura para ser explorada.
+
+Em resumo, a função atiraFlecha simula o ato de atirar uma flecha em uma determinada direção no ambiente do jogo, permitindo que o agente elimine Wumpus e torne o ambiente mais seguro para explorar.(coordenada linha e coluna), e matrix, que representa o ambiente do jogo com suas células e informações.
+
+A função utiliza a posição atual do agente para determinar a direção em que a flecha será disparada. Por exemplo, se o agente estiver na posição (linha, coluna), a flecha será disparada na direção correspondente à linha acima (linha-1) ou abaixo (linha+1) e à mesma coluna.
+
+Ao disparar a flecha, a função verifica se há algum Wumpus na direção em que a flecha foi disparada. Se houver um Wumpus na célula atingida pela flecha, o Wumpus é eliminado e a informação é atualizada na matriz matrix. Caso contrário, a flecha simplesmente passa pelo espaço vazio sem causar nenhum efeito.
+
+Essa função é importante para que o agente possa se livrar dos Wumpus no ambiente. Ao atirar a flecha, o agente elimina qualquer Wumpus na direção em que a flecha foi disparada, tornando essa área segura para ser explorada.
+
+Em resumo, a função atiraFlecha simula o ato de atirar uma flecha em uma determinada direção no ambiente do jogo, permitindo que o agente elimine Wumpus e torne o ambiente mais seguro para explorar.
