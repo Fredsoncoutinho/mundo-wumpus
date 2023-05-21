@@ -1,8 +1,13 @@
 ## O mundo de wumpus
-# Disciplina: Inteligência Computacional
+## Engenharia Elétrica
+# Disciplina: Inteligência Computacional - CO18036 (2023.02 – T01)
+
+**Docente**: Prof. Dr. Otavio Noura Teixeira
+
 **Discente 1**: Fredson Coutinho de Araújo Junior-201933940014
 
 **Discente 2**: Willian Rodrigues Xavier-201933940022
+
 ## INTRODUÇÃO
 O jogo "Mundo de Wumpus" é uma simulação de aventura baseada em texto que desafia os jogadores a explorar um ambiente perigoso em busca de um tesouro valioso. O objetivo principal é encontrar o tesouro e retornar em segurança à posição inicial, evitando armadilhas mortais e criaturas hostis.
 
