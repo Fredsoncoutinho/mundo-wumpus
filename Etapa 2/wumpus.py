@@ -19,8 +19,9 @@ def relatorio():
     print("Morte por Wumpus: "+str(morte_wumpus))
     print("Achou ouro: "+ str(venceu))
     print("Voltou para origem: "+ str(qtd_origem))
+    print(f"Matou o wumpus {matou} vezes")
     print()
-    print("Voltou nos mundos: ",str(voltou_mundo))
+    #print("Voltou nos mundos: ",str(voltou_mundo))
     #print("Movimentos: "+ str(movimento_agente))
         
 
@@ -55,7 +56,7 @@ def seedWorld(Mundo):
 
        
     random.shuffle(symbols)
-    print(symbols)
+    #print(symbols)
     # Coloca os símbolos restantes na matriz
     for s in symbols:
         while True:
@@ -69,20 +70,20 @@ def seedWorld(Mundo):
     
 def verifica_valor(matrix, row, col, value):
     if row < 0 or row >= len(matrix) or col < 0 or col >= len(matrix[0]):
-        print("Posição inválida!")
+        #print("Posição inválida!")
         return False
 
     if matrix[row][col].find(value) != -1:
-        print(f"O valor '{value}' está presente na posição ({row}, {col}) da matriz.")
+        #print(f"O valor '{value}' está presente na posição ({row}, {col}) da matriz.")
         return True
     else:
-        print(f"O valor '{value}' não está presente na posição ({row}, {col}) da matriz.")
+        #print(f"O valor '{value}' não está presente na posição ({row}, {col}) da matriz.")
         return False
   
 
 def moveElement(matrix, direction):
-    global morte_wumpus, morte_poco, venceu, voltou_origem,qtd_origem, movimento_agente, possui_ouro,voltou_mundo
-    agentRow, agentCol = None, None
+    global morte_wumpus, morte_poco, venceu, voltou_origem,qtd_origem, movimento_agente, possui_ouro,voltou_mundo, flecha, matou
+    agentRow, agentCol = None, None,
     rows, cols = len(matrix), len(matrix[0])
     
     # Encontra a posição atual do agente
@@ -93,8 +94,8 @@ def moveElement(matrix, direction):
                 break
         if agentRow is not None:
             break
-   
- 
+
+    
     # Calcula a nova posição do agente
     if direction == 'd':
         newRow, newCol = agentRow, agentCol + 1
@@ -105,63 +106,86 @@ def moveElement(matrix, direction):
     elif direction == 'c':
         newRow, newCol = agentRow + 1, agentCol
     else:
-        print("Movimento inválido!")
+        #print("Movimento inválido!")
         return 
     # Verifica se a nova posição é válida
-
+    x, y = newRow, newCol 
+    if x >= 0 and x < len(matrix) and y >= 0 and y < len(matrix[0]):
+        percepcao = identificaPercepcao(matrix[newRow][newCol])
+        posicao_atira = atiraFlecha(percepcao, newCol, newRow)
+        if posicao_atira is not None:
+            x, y = posicao_atira
+            if x >= 0 and x < len(matrix) and y >= 0 and y < len(matrix[0]):
+                if flecha>0:
+                    if "W" in matrix[x][y]:
+                        matrix[x][y] = "M"
+                        print("matou")
+                        flecha = -1
+                        print("numero de flechas ", flecha)
+                        matou += 1
+                    else:
+                        print("não matou")
+                        flecha = 0
+                        print("numero de flechas ", flecha)
+    
+            
+    
     if newRow < 0 or newRow >= rows or newCol < 0 or newCol >= cols:
         #print('Movimento inválido!')
+        #for i in reversed(range(matrix_size)):
+        #    print(Mundo[i])
         return
-      
+    
     if newRow == 0 and newCol == 0 and possui_ouro == True:
         matrix[newRow][newCol] = "A"
         matrix[agentRow][agentCol] = 'V'
         voltou_origem = True
         qtd_origem += 1
-        print("Voltou origem ")
+
         
         for i in reversed(range(matrix_size)):
             print(Mundo[i])
+        #print("##############Voltou origem#############")
+        #print()
         return False
     
     
+
     
-    if matrix[newRow][newCol].find('W') != -1 or matrix[newRow][newCol].find('P') != -1:
+    if "W" in matrix[newRow][newCol] or "P" in matrix[newRow][newCol]:
         if matrix[newRow][newCol] == "W":
             morte_wumpus += 1
+            print("Morreu pelo Wumpus")
         else:
             morte_poco += 1
+            print("Caiu no poço")
         matrix[newRow][newCol] = 'X'
         matrix[agentRow][agentCol] = 'V'
         movimento_agente.append([newRow,newCol])
         for i in reversed(range(matrix_size)):
             print(Mundo[i])
         
-        
-        print('Morreu')
+        #print('Morreu')
         return False 
-        
-    if matrix[newRow][newCol] == 'O':
-        if 'O' in matrix[newRow][newCol]:
-            # Move o agente para a nova posição mantendo os caracteres existentes, exceto "O"
-            matrix[newRow][newCol] = 'A' + matrix[newRow][newCol].replace('O', '')
 
-        else:
-            # Move o agente para a nova posição
-            matrix[newRow][newCol] += 'A'
-        #matrix[agentRow][agentCol] = 'V'
+    if matrix[newRow][newCol].find("O") == 0:
+        #print("posição anterior: ",matrix[agentCol][agentRow])
+        matrix[newRow][newCol] = matrix[newRow][newCol].replace('O', 'A')
+        matrix[agentRow][agentCol] = matrix[agentRow][agentCol].replace('A', 'V')
+  
+        
         possui_ouro = True
         movimento_agente.append([newRow,newCol])
         for i in reversed(range(matrix_size)):
             print(Mundo[i])
         venceu += 1
-        print('Achou o Ouro')
+        #print('Achou o Ouro')
         return 
      
     """
     # Verifica se a nova posição está vazia
     if matrix[newRow][newCol] != 'V':
-        print('Movimento inválido!')
+        #print('Movimento inválido!')
         return
     """
     if matrix[newRow][newCol].find("V") != -1:
@@ -169,10 +193,12 @@ def moveElement(matrix, direction):
         matrix[newRow][newCol] = 'A' + matrix[newRow][newCol].replace('V', '')
         matrix[agentRow][agentCol] = matrix[agentRow][agentCol].replace('A', 'V')
         movimento_agente.append([newRow, newCol])
-    
+        
+        for i in reversed(range(matrix_size)):
+            print(Mundo[i])
 
-    
-    print(newRow,newCol,possui_ouro)
+
+    #print(newRow,newCol,possui_ouro)
     
     
 def adicionarPercepcoes(matrix):
@@ -180,92 +206,154 @@ def adicionarPercepcoes(matrix):
 
     for i in range(rows):
         for j in range(cols):
-            if matrix[i][j] == 'W':
+            if matrix[i][j].find("W") != -1:
                 # Adiciona a percepção de fedor nas posições adjacentes
                 if i > 0:
-                    if matrix[i - 1][j] != 'W':
+                    if matrix[i - 1][j] != 'W' and matrix[i - 1][j] != "P":
+                        
                         matrix[i - 1][j] += 'F'
                 if i < rows - 1:
-                    if matrix[i + 1][j] != 'W':
+                    if matrix[i + 1][j] != 'W' and matrix[i + 1][j] != "P":
                         matrix[i + 1][j] += 'F'
                 if j > 0:
-                    if matrix[i][j - 1] != 'W':
+                    if matrix[i][j - 1] != 'W' and matrix[i][j - 1] != "P":
                         matrix[i][j - 1] += 'F'
                 if j < cols - 1:
-                    if matrix[i][j + 1] != 'W':
+                    if matrix[i][j + 1] != 'W' and matrix[i][j + 1] != "P":
                         matrix[i][j + 1] += 'F'
             
-            if matrix[i][j] == 'P':
+            if matrix[i][j].find("P") != -1:
                 # Adiciona a percepção de brisa nas posições adjacentes
                 if i > 0:
-                    if matrix[i - 1][j] != 'P':
+                    if matrix[i - 1][j] != 'P' and matrix[i - 1][j] != "P":
                         matrix[i - 1][j] += 'B'
                 if i < rows - 1:
-                    if matrix[i + 1][j] != 'P':
+                    if matrix[i + 1][j] != 'P' and matrix[i + 1][j] != "P":
                         matrix[i + 1][j] += 'B'
                 if j > 0:
-                    if matrix[i][j - 1] != 'P':
+                    if matrix[i][j - 1] != 'P' and matrix[i][j - 1] != "P":
                         matrix[i][j - 1] += 'B'
                 if j < cols - 1:
-                    if matrix[i][j + 1] != 'P':
+                    if matrix[i][j + 1] != 'P' and matrix[i][j + 1] != "P":
                         matrix[i][j + 1] += 'B'
             
-            if matrix[i][j] == 'O':
+            if matrix[i][j].find("O") != -1:
                 # Adiciona a percepção de brilho na posição adjacente
                 if i > 0:
-                    if matrix[i - 1][j] != 'O':
+                    if matrix[i - 1][j] != 'O' and matrix[i - 1][j] != "P":
+                      
                         matrix[i - 1][j] += 'G'
                 if i < rows - 1:
-                    if matrix[i + 1][j] != 'O':
+                    if matrix[i + 1][j] != 'O' and matrix[i + 1][j] != "P":
+                        
                         matrix[i + 1][j] += 'G'
                 if j > 0:
-                    if matrix[i][j - 1] != 'O':
+                    if matrix[i][j - 1] != 'O' and matrix[i][j - 1] != "P":
+                        4
                         matrix[i][j - 1] += 'G'
                 if j < cols - 1:
-                    if matrix[i][j + 1] != 'O':
+                    if matrix[i][j + 1] != 'O' and matrix[i][j + 1] != "P":
+                        
                         matrix[i][j + 1] += 'G'
 
 
-def iniciaMundo():
-    global matrix_size, Mundo, epocas, possui_ouro, qtd_origem, voltou_mundo, voltou_origem, id_mundo
+def identificaPercepcao(posicao):
+    if "G" in posicao:
+        print("percebeu brilho")
+        return "G"
+    if "F" in posicao:
+        print("percebeu fedor")
+        return "F"
+    if "B" in posicao:
+        print("percebeu brisa")
+        return "B"
+    print("Não identificou nada")
+    return "N"
 
+
+def atiraFlecha(percepcao, agentCol, agentRow):
+    global flecha
+    adjacents = []
+    if percepcao == None:
+        return 
+    if "F" in percepcao:
+        cima = [agentRow - 1, agentCol]
+        baixo = [agentRow + 1, agentCol]
+        direita = [agentRow, agentCol - 1]
+        esquerda = [agentRow, agentCol + 1]
+        
+        adjacents += [cima]
+        adjacents += [baixo]
+        adjacents += [direita]
+        adjacents += [esquerda]
+        
+        print(adjacents)
+        
+        posicao_atira = random.choice(adjacents)
+        
+        return posicao_atira
+    
+    
+def iniciaMundo():
+    global flecha, matrix_size, Mundo, epocas, possui_ouro, qtd_origem, voltou_mundo, voltou_origem, id_mundo
+    """
+    modo = input("deseja que seja manual ou automatico? [m/a] ")
+
+    if modo == "m":
+        lista_posicao = []
+        resultado = input("digite a nova posição (c,b,d,e): ")
+        matrix_size = int(input("Qual o tamanho do mundo? "))
+        epocas = int(input("Quantas simulações dejesa fazer? "))
+    else:
+        matrix_size = int(input("Qual o tamanho do mundo? "))
+        epocas = int(input("Quantas simulações dejesa fazer? "))
+"""
+    #adicionarPercepcoes(Mundo)  # Adiciona as per4
     matrix_size = int(input("Qual o tamanho do mundo? "))
     epocas = int(input("Quantas simulações dejesa fazer? "))
-    #adicionarPercepcoes(Mundo)  # Adiciona as per4
-    
     for i in range(epocas):
         id_mundo = i
         if voltou_origem == True:
              voltou_mundo.append(id_mundo)
         possui_ouro = False
+        flecha = 1
         Mundo= []
         seedWorld(Mundo)
         adicionarPercepcoes(Mundo)
-        print("Mundo ",i)
+        print()
+        
+        print("***************Mundo ",i,"***************")
+        for i in reversed(range(matrix_size)):
+                print(Mundo[i])
         while True:
             #os.system('clr||clear')
             # Imprime a matriz com as linhas invertidas
            
-            for i in reversed(range(matrix_size)):
+            #for i in reversed(range(matrix_size)):
                 #if len(Mundo[i]) < 3:
                     #print(" "+Mundo[i]+" ")
                 #else:
-                 print(Mundo[i])
-            print()
+                 #print(Mundo[i])
+            #print()
             
-            #lista_posicao = []
+            lista_posicao = []
             #resultado = input("digite a nova posição (c,b,d,e): ")
-            
+
+
             lista = ['c', 'b', 'e', 'd']
             resultado = random.choice(lista)
-        
-            if possui_ouro:
-                print("Possui ouro!")
             
-            if moveElement(Mundo, resultado) == False:
-                print()
-                break
+
+            #if possui_ouro:
+                #print("Possui ouro!")
+
             print()
+            for i in reversed(range(matrix_size)):
+               print(Mundo[i])
+            if moveElement(Mundo, resultado) == False:
+                #print()
+                break
+            #print()
   
     relatorio()
     
@@ -288,6 +376,7 @@ while True:
     qtd_origem =0
     possui_ouro = False 
     voltou_origem = False
-    
+    matou = 0
+    flecha = 1
     iniciaMundo()
     
